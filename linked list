@@ -1,0 +1,109 @@
+
+1.IMPLEMENT A SINGLY LINKED LIST TO MANAGE PATIENT DETAILS(NAME,AGE,ID) AND PERFORM INSERTION, DELECTION OPERATIONS
+
+
+
+# Define a Node class to store patient details
+class Node:
+    def __init__(self, name, age, patient_id):
+        self.name = name
+        self.age = age
+        self.patient_id = patient_id
+        self.next = None
+
+
+# Define the Linked List class
+class PatientLinkedList:
+    def __init__(self):
+        self.head = None
+
+    # Insert a new patient at the end
+    def insert_patient(self, name, age, patient_id):
+        new_node = Node(name, age, patient_id)
+        if self.head is None:
+            self.head = new_node
+            print(f"Patient {name} added as the first record.")
+            return
+        temp = self.head
+        while temp.next:
+            temp = temp.next
+        temp.next = new_node
+        print(f"Patient {name} added successfully.")
+
+    # Delete a patient by ID
+    def delete_patient(self, patient_id):
+        temp = self.head
+
+        # Empty list check
+        if temp is None:
+            print("No patients in the list.")
+            return
+
+        # If head node is to be deleted
+        if temp.patient_id == patient_id:
+            self.head = temp.next
+            print(f"Patient with ID {patient_id} deleted.")
+            return
+
+        # Search for the patient to delete
+        prev = None
+        while temp is not None and temp.patient_id != patient_id:
+            prev = temp
+            temp = temp.next
+
+        # If patient not found
+        if temp is None:
+            print(f"Patient with ID {patient_id} not found.")
+            return
+
+        # Unlink the node
+        prev.next = temp.next
+        print(f"Patient with ID {patient_id} deleted successfully.")
+
+    # Display all patient details
+    def display_patients(self):
+        if self.head is None:
+            print("No patient records available.")
+            return
+
+        print("\nPatient Details:")
+        print("-" * 40)
+        temp = self.head
+        while temp:
+            print(f"Name: {temp.name}, Age: {temp.age}, ID: {temp.patient_id}")
+            temp = temp.next
+        print("-" * 40)
+
+
+# Example usage
+if __name__ == "__main__":
+    plist = PatientLinkedList()
+    plist.insert_patient("Alice", 30, 101)
+    plist.insert_patient("Bob", 45, 102)
+    plist.insert_patient("Charlie", 28, 103)
+
+    plist.display_patients()
+
+    plist.delete_patient(102)
+    plist.display_patients()
+
+
+OUTPUT: 
+
+Patient Alice added as the first record.
+Patient Bob added successfully.
+Patient Charlie added successfully.
+
+Patient Details:
+----------------------------------------
+Name: Alice, Age: 30, ID: 101
+Name: Bob, Age: 45, ID: 102
+Name: Charlie, Age: 28, ID: 103
+----------------------------------------
+Patient with ID 102 deleted successfully.
+
+Patient Details:
+----------------------------------------
+Name: Alice, Age: 30, ID: 101
+Name: Charlie, Age: 28, ID: 103
+----------------------------------------
